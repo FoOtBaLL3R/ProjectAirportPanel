@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.960
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project_Airport_panel_v1", "Project_Airport_panel_v1\Project_Airport_panel_v1.csproj", "{634C7B1E-1EF2-4F0A-AA9C-F2F6220AEBEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectAirportPanelV2", "ProjectAirportPanelV2\ProjectAirportPanelV2.csproj", "{AC03E7D3-583A-4A30-A32C-E7416639D65C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{634C7B1E-1EF2-4F0A-AA9C-F2F6220AEBEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{634C7B1E-1EF2-4F0A-AA9C-F2F6220AEBEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{634C7B1E-1EF2-4F0A-AA9C-F2F6220AEBEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{634C7B1E-1EF2-4F0A-AA9C-F2F6220AEBEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC03E7D3-583A-4A30-A32C-E7416639D65C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC03E7D3-583A-4A30-A32C-E7416639D65C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC03E7D3-583A-4A30-A32C-E7416639D65C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC03E7D3-583A-4A30-A32C-E7416639D65C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5101C5BF-3958-4AF1-8889-8619901CB6F6}
+	EndGlobalSection
+EndGlobal
