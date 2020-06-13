@@ -223,19 +223,20 @@ namespace ProjectAirportPanelV2
             {
                 if (info < list.Count)
                 {
-                    Console.WriteLine(delim);
-                    Console.Write(string.Join('|', ++start).PadLeft(8));
-                    Console.Write(string.Join('|', list[info].FlightNumber).PadLeft(20));
-                    Console.Write(string.Join('|', list[info].DateDeparture).PadLeft(30));
-                    Console.Write(string.Join('|', list[info].DateArrival).PadLeft(30));
-                    Console.Write(string.Join('|', list[info].CityOfDeparture).PadLeft(20));
-                    Console.Write(string.Join('|', list[info].CityOfArrival).PadLeft(20));
-                    Console.Write(string.Join('|', list[info].PortOfDeparture).PadLeft(18));
-                    Console.Write(string.Join('|', list[info].PortOfArrival).PadLeft(18));
-                    Console.Write(string.Join('|', list[info].Airline).PadLeft(28));
-                    Console.Write(string.Join('|', list[info].Terminal).PadLeft(12));
-                    Console.Write(string.Join('|', list[info].Status).PadLeft(17));
-                    Console.WriteLine();
+                    Scoop(info);
+                    //Console.WriteLine(delim);
+                    //Console.Write(string.Join('|', ++start).PadLeft(8));
+                    //Console.Write(string.Join('|', list[info].FlightNumber).PadLeft(20));
+                    //Console.Write(string.Join('|', list[info].DateDeparture).PadLeft(30));
+                    //Console.Write(string.Join('|', list[info].DateArrival).PadLeft(30));
+                    //Console.Write(string.Join('|', list[info].CityOfDeparture).PadLeft(20));
+                    //Console.Write(string.Join('|', list[info].CityOfArrival).PadLeft(20));
+                    //Console.Write(string.Join('|', list[info].PortOfDeparture).PadLeft(18));
+                    //Console.Write(string.Join('|', list[info].PortOfArrival).PadLeft(18));
+                    //Console.Write(string.Join('|', list[info].Airline).PadLeft(28));
+                    //Console.Write(string.Join('|', list[info].Terminal).PadLeft(12));
+                    //Console.Write(string.Join('|', list[info].Status).PadLeft(17));
+                    //Console.WriteLine();
                 }
             }
             Console.WriteLine();
