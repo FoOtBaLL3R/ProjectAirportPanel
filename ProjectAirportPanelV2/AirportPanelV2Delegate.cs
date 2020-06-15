@@ -29,7 +29,7 @@ namespace ProjectAirportPanelV2
     }
     class AirportPanelV2Delegate
     {
-        string format = @"yyyy/MM/dd HH:mm:ss";       
+        string format = @"yyyy/MM/dd HH:mm:ss";
 
         string delim = new string('-', 233);
 
@@ -60,7 +60,7 @@ namespace ProjectAirportPanelV2
 
             while (true)
             {
-                Console.Clear();                
+                Console.Clear();
                 Console.WriteLine(new string('-', 50));
                 UserChoice chooise = PromptWhatToDo();
 
@@ -68,7 +68,7 @@ namespace ProjectAirportPanelV2
                 {
                     case UserChoice.Information:
                         {
-                            DumpAirportList(list);                            
+                            DumpAirportList(list);
                             break;
                         }
                     case UserChoice.CreateRecords:
@@ -80,7 +80,7 @@ namespace ProjectAirportPanelV2
                                 var airport = new Airport();
                                 airportEdit(airport);
                                 list.Add(airport);
-                            }                            
+                            }
                             break;
                         }
 
@@ -187,7 +187,7 @@ namespace ProjectAirportPanelV2
         }
 
         private Airport GetEditToEdit(List<Airport> list)
-        {                        
+        {
             DumpAirportList(list);
             Console.Write("Enter index number of airport to edit:");
             int idx = int.Parse(Console.ReadLine()) - 1;
@@ -197,80 +197,72 @@ namespace ProjectAirportPanelV2
 
         private void DumpAirportList(List<Airport> list)
         {
-            
+
             //int numIndx = 1;
             ConsoleColor current = Console.ForegroundColor;
-            int page = 1;
+            int sheet = 1;
 
             int countRecords = list.Count;
             int recordOnPage = 5;
-
-            Page:
-            double countsPages = Convert.ToDouble(countRecords) / recordOnPage;//к-сть сторінок
-            double pagesCounts = Math.Ceiling(countsPages);//заокруглення
-
-            int start = (page - 1) * recordOnPage;
-            int end = page * recordOnPage;            
-            
-            string[] columns = {"Index".PadLeft(10),"Flight number".PadLeft(18), "Date and time of departure".PadLeft(31), "Date and time of arrival".PadLeft(31), "City of departure".PadLeft(20),
-                "City of arrival".PadLeft(20),"Port of departure".PadLeft(20), "Port of arrival".PadLeft(20), "Airline".PadLeft(16), "Terminal".PadLeft(18), "Flight status".PadLeft(18) };
-
-            Console.Clear();
-            Console.WriteLine(string.Join("|", columns));
-
-            //цикл для пагінації
-            for (int info = start; info < end; info++)
+            Page(sheet);
+            void Page(int page)
             {
-                if (info < list.Count)
+                double countsPages = Convert.ToDouble(countRecords) / recordOnPage;//к-сть сторінок
+                double pagesCounts = Math.Ceiling(countsPages);//заокруглення
+
+                int start = (page - 1) * recordOnPage;
+                int end = page * recordOnPage;
+
+                string[] columns = {"Index".PadLeft(10),"Flight number".PadLeft(18), "Date and time of departure".PadLeft(31), "Date and time of arrival".PadLeft(31), "City of departure".PadLeft(20),
+                    "City of arrival".PadLeft(20),"Port of departure".PadLeft(20), "Port of arrival".PadLeft(20), "Airline".PadLeft(16), "Terminal".PadLeft(18), "Flight status".PadLeft(18) };
+
+                Console.Clear();
+                Console.WriteLine(string.Join("|", columns));
+
+                //цикл для пагінації
+                for (int info = start; info < end; info++)
                 {
-                    Scoop(info);
-                    //Console.WriteLine(delim);
-                    //Console.Write(string.Join('|', ++start).PadLeft(8));
-                    //Console.Write(string.Join('|', list[info].FlightNumber).PadLeft(20));
-                    //Console.Write(string.Join('|', list[info].DateDeparture).PadLeft(30));
-                    //Console.Write(string.Join('|', list[info].DateArrival).PadLeft(30));
-                    //Console.Write(string.Join('|', list[info].CityOfDeparture).PadLeft(20));
-                    //Console.Write(string.Join('|', list[info].CityOfArrival).PadLeft(20));
-                    //Console.Write(string.Join('|', list[info].PortOfDeparture).PadLeft(18));
-                    //Console.Write(string.Join('|', list[info].PortOfArrival).PadLeft(18));
-                    //Console.Write(string.Join('|', list[info].Airline).PadLeft(28));
-                    //Console.Write(string.Join('|', list[info].Terminal).PadLeft(12));
-                    //Console.Write(string.Join('|', list[info].Status).PadLeft(17));
-                    //Console.WriteLine();
+                    if (info < list.Count)
+                    {
+                        Scoop(info);
+
+                    }
+                }
+                Console.WriteLine();
+                //цикл виведення сторінок і на якій сторінці знаходимся
+                for (var c = 1; c <= pagesCounts; c++)
+                {
+                    if (page == c)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+
+                    Console.Write(c + " ");
+                    Console.ForegroundColor = current;
+                }
+                Console.WriteLine();
+                Console.WriteLine("Enter number of page... or 0 to quit");
+                ReEnter(pagesCounts);
+            }
+
+            void ReEnter(double countsPage)
+            {                
+                int pag = int.Parse(Console.ReadLine());
+                if (pag > 0 && pag <= countsPage)
+                {
+                    Page(pag);
+                }
+                else if (pag > countsPage)
+                {
+                    Console.WriteLine("Eror....Please re-Enter number");
+                    ReEnter(countsPage);
                 }
             }
-            Console.WriteLine();
-            //цикл виведення сторінок і на якій сторінці знаходимся
-            for (var c = 1; c <= pagesCounts; c++)
-            {
-                if (page == c)
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-
-                Console.Write(c + " ");
-                Console.ForegroundColor = current;
-            }
-            Console.WriteLine();
-            Console.WriteLine("Enter number of page... or 0 to quit");
-            ReEnter:
-            page = int.Parse(Console.ReadLine());
-            if (page > 0 && page <= pagesCounts)
-            {
-                goto Page;
-            }
-            else if (page > pagesCounts)
-            {
-                Console.WriteLine("Eror....Please re-Enter number");
-                goto ReEnter;
-            }
-
-
             for (int a = 0; a <= 3; a++)
             {
                 Console.WriteLine();
             }
-        }        
+        }
 
         public void EditDateArrival(Airport airport)
         {
@@ -286,12 +278,12 @@ namespace ProjectAirportPanelV2
             string newDepartureDate = Console.ReadLine();
             DateTime newDateDeparture = DateTime.ParseExact(newDepartureDate, format, CultureInfo.InvariantCulture, DateTimeStyles.None);
             airport.DateDeparture = newDateDeparture;
-        }      
+        }
 
         public void EditFlightNumber(Airport airport)
         {
             Console.Write("Enter flight number ");
-            string newFlightNumber = Console.ReadLine();            
+            string newFlightNumber = Console.ReadLine();
             airport.FlightNumber = newFlightNumber;
         }
 
@@ -315,7 +307,7 @@ namespace ProjectAirportPanelV2
             string newAirline = Console.ReadLine();
             airport.Airline = newAirline;
         }
-        
+
         public void EditTerminal(Airport airport)
         {
             Console.Write("Enter terminal ");
@@ -336,10 +328,10 @@ namespace ProjectAirportPanelV2
             string newPortofDeparture = Console.ReadLine();
             airport.PortOfDeparture = newPortofDeparture;
         }
-        
+
         public void EditFlightStatus(Airport airport)
         {
-            Console.Write("Enter flight status:\n1)check in\n2)gate closed\n3)arrived\n4)departed at\n5)unknown\n6)canceled"+
+            Console.Write("Enter flight status:\n1)check in\n2)gate closed\n3)arrived\n4)departed at\n5)unknown\n6)canceled" +
                 "\n7)expected at\n8)delayed\n9)in flight");
             int newFlightStatus = Convert.ToInt32(Console.ReadLine());
             airport.Status = (Airport.FlightStatus)newFlightStatus;
@@ -428,9 +420,6 @@ namespace ProjectAirportPanelV2
                     }
                     Search();
                     break;
-                    //case 11:
-                    //    View();
-                    //    break;
 
             }
             void Search()
@@ -453,7 +442,6 @@ namespace ProjectAirportPanelV2
             }
             void Result()
             {
-                //var delim = new string('-', 233);
                 string[] columns = {"Index".PadLeft(10),"Flight number".PadLeft(18), "Date and time of departure".PadLeft(31), "Date and time of arrival".PadLeft(31), "City of departure".PadLeft(20),
                 "City of arrival".PadLeft(20),"Port of departure".PadLeft(20), "Port of arrival".PadLeft(20), "Airline".PadLeft(16), "Terminal".PadLeft(18), "Flight status".PadLeft(18) };
                 Console.Clear();
@@ -463,7 +451,7 @@ namespace ProjectAirportPanelV2
                     if (indxSearch.Contains(f))
                     {
                         Scoop(f);
-                        
+
                     }
 
                 }
@@ -476,7 +464,7 @@ namespace ProjectAirportPanelV2
 
             }
             Result();
-            
+
         }
 
         private void Scoop(int i)
