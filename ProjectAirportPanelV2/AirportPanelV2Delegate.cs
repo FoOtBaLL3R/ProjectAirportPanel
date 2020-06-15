@@ -225,7 +225,6 @@ namespace ProjectAirportPanelV2
                     if (info < list.Count)
                     {
                         Scoop(info);
-
                     }
                 }
                 Console.WriteLine();
@@ -236,7 +235,6 @@ namespace ProjectAirportPanelV2
                     {
                         Console.ForegroundColor = ConsoleColor.White;
                     }
-
                     Console.Write(c + " ");
                     Console.ForegroundColor = current;
                 }
