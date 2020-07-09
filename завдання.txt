@@ -1,3 +1,33 @@
 1)editprop для редагування і пошуку переробити
 2)пагінація перегрузкою методів
 3)Dictionary по ключу Prop до предиката і далі шукаєм якщо співпало через делегат тру фолс виводим дамп
+
+class Demo
+{
+    enum PropName 
+    {
+        Status,
+        DateArrival
+        // props 
+    }
+    delegate bool SearchPredicate(Airport a, string arg);
+
+    static Dictionary<PropName, SearchPredicate> DelegatesCache;
+    static List<Airport> Airports;
+    static void Main()
+    {
+        DelegatesCache = new Dictionary<PropName, SearchPredicate>
+        {
+            [PropName.Status] = (a, status) => a.Status.ToString() == status,
+            // 2020-07-09T22:18:43Z
+            [PropNames.DateArrival] = (a, dateStr) => a.DateArrival.Date == DateTime.Parse(dateStr, "Pattern").Date
+        };
+
+
+        Console.WriteLine("Enter desired status to find all flights");
+
+        string userInput = Console.ReadLine(); // Arrived
+        SearchPredicate p = DelegatesCache[PropName.Status];
+        List<Airport> searchResult = Airports.FindAll(a => p(a, userInput));
+    }
+}
