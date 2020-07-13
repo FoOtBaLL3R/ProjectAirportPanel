@@ -14,7 +14,7 @@ namespace ProjectAirportPanelV2
         SearchRecords,
         DeleteRecords
     }
-    enum SelectedAirportEditProp
+    enum SelectedAirportProp
     {
         FlightNumber = 1,
         DateArrival,
@@ -28,10 +28,31 @@ namespace ProjectAirportPanelV2
         FlightStatus
     }
     class AirportPanelV2Delegate
-    {
+    {        
         string format = @"yyyy/MM/dd HH:mm:ss";
 
         string delim = new string('-', 233);
+
+        delegate bool SearchPredicate(Airport a, string arg);
+
+        static Dictionary<SelectedAirportProp, SearchPredicate> DelegatesCache;
+        static List<Airport> Airports;
+        //static void Main()
+        //{
+        //    DelegatesCache = new Dictionary<PropName, SearchPredicate>
+        //    {
+        //        [PropName.Status] = (a, status) => a.Status.ToString() == status,
+        //        // 2020-07-09T22:18:43Z
+        //        [PropNames.DateArrival] = (a, dateStr) => a.DateArrival.Date == DateTime.Parse(dateStr, "Pattern").Date
+        //    };
+
+
+        //    Console.WriteLine("Enter desired status to find all flights");
+
+        //    string userInput = Console.ReadLine(); // Arrived
+        //    SearchPredicate p = DelegatesCache[PropName.Status];
+        //    List<Airport> searchResult = Airports.FindAll(a => p(a, userInput));
+        //}
 
         List<Airport> list = new List<Airport>();
         public void Records()
@@ -96,61 +117,61 @@ namespace ProjectAirportPanelV2
                             Airport ai = GetEditToEdit(list);
                             Console.WriteLine("Choose what to edit (enter number):");
                             int num = 1;
-                            foreach (string availableChoiseName in Enum.GetNames(typeof(SelectedAirportEditProp)))
+                            foreach (string availableChoiseName in Enum.GetNames(typeof(SelectedAirportProp)))
                             {
                                 Console.WriteLine("{0} {1}", num++, availableChoiseName);
                             }
 
-                            SelectedAirportEditProp toEdit = Enum.Parse<SelectedAirportEditProp>(Console.ReadLine());
+                            SelectedAirportProp toEdit = Enum.Parse<SelectedAirportProp>(Console.ReadLine());
 
                             switch (toEdit)
                             {
-                                case SelectedAirportEditProp.Airline:
+                                case SelectedAirportProp.Airline:
                                     {
                                         EditAirline(ai);
                                         break;
                                     }
-                                case SelectedAirportEditProp.CityOfArrivval:
+                                case SelectedAirportProp.CityOfArrivval:
                                     {
                                         EditCityOfArrivval(ai);
                                         break;
                                     }
-                                case SelectedAirportEditProp.CityOfDeparture:
+                                case SelectedAirportProp.CityOfDeparture:
                                     {
                                         EditCityOfDeparture(ai);
                                         break;
                                     }
-                                case SelectedAirportEditProp.DateArrival:
+                                case SelectedAirportProp.DateArrival:
                                     {
                                         EditDateArrival(ai);
                                         break;
                                     }
-                                case SelectedAirportEditProp.DateDeparture:
+                                case SelectedAirportProp.DateDeparture:
                                     {
                                         EditDateDeparture(ai);
                                         break;
                                     }
-                                case SelectedAirportEditProp.FlightNumber:
+                                case SelectedAirportProp.FlightNumber:
                                     {
                                         EditFlightNumber(ai);
                                         break;
                                     }
-                                case SelectedAirportEditProp.FlightStatus:
+                                case SelectedAirportProp.FlightStatus:
                                     {
                                         EditFlightStatus(ai);
                                         break;
                                     }
-                                case SelectedAirportEditProp.PortofArrival:
+                                case SelectedAirportProp.PortofArrival:
                                     {
                                         EditPortofArrival(ai);
                                         break;
                                     }
-                                case SelectedAirportEditProp.PortofDeparture:
+                                case SelectedAirportProp.PortofDeparture:
                                     {
                                         EditPortofDeparture(ai);
                                         break;
                                     }
-                                case SelectedAirportEditProp.Terminal:
+                                case SelectedAirportProp.Terminal:
                                     {
                                         EditTerminal(ai);
                                         break;
@@ -337,6 +358,24 @@ namespace ProjectAirportPanelV2
 
         public void SearchRecord()
         {
+
+            DelegatesCache = new Dictionary<SelectedAirportProp, SearchPredicate>
+            {
+                [SelectedAirportProp.FlightStatus] = (a, status) => a.Status.ToString() == status,
+                // 2020-07-09T22:18:43Z
+                [SelectedAirportProp.DateArrival] = (a, dateStr) => a.DateArrival.Date == DateTime.Parse(dateStr, "Pattern").Date
+            };
+
+
+            Console.WriteLine("Enter desired status to find all flights");
+
+            string userInput = Console.ReadLine(); // Arrived
+            SearchPredicate p = DelegatesCache[SelectedAirportProp.Status];
+            List<Airport> searchResult = Airports.FindAll(a => p(a, userInput));
+
+
+
+            /*
             int da = 0;
             List<int> indxSearch = new List<int>();
             string[] columnSearch = new string[list.Count];
@@ -418,10 +457,11 @@ namespace ProjectAirportPanelV2
                     }
                     Search();
                     break;
+                    
 
             }
             void Search()
-            {
+            {            
                 if (da == 1)
                 {
                     Console.WriteLine("Date format: dd.MM.yyyy HH:mm:ss");
@@ -437,7 +477,8 @@ namespace ProjectAirportPanelV2
                         indxSearch.Add(e);
                     }
                 }
-            }
+                
+            }*/
             void Result()
             {
                 string[] columns = {"Index".PadLeft(10),"Flight number".PadLeft(18), "Date and time of departure".PadLeft(31), "Date and time of arrival".PadLeft(31), "City of departure".PadLeft(20),
@@ -446,11 +487,11 @@ namespace ProjectAirportPanelV2
                 Console.WriteLine(string.Join("|", columns));
                 for (var f = 0; f < list.Count; f++)
                 {
-                    if (indxSearch.Contains(f))
-                    {
-                        Scoop(f);
+                    //if (indxSearch.Contains(f))
+                    //{
+                    //    Scoop(f);
 
-                    }
+                    //}
 
                 }
                 for (int a = 0; a <= 3; a++)
