@@ -234,8 +234,8 @@ namespace ProjectAirportPanelV2
                 int start = (page - 1) * recordOnPage;
                 int end = page * recordOnPage;
 
-                string[] columns = {"Index".PadLeft(10),"Flight number".PadLeft(18), "Date and time of departure".PadLeft(31), "Date and time of arrival".PadLeft(31), "City of departure".PadLeft(20),
-                    "City of arrival".PadLeft(20),"Port of departure".PadLeft(20), "Port of arrival".PadLeft(20), "Airline".PadLeft(16), "Terminal".PadLeft(18), "Flight status".PadLeft(18) };
+                string[] columns = {"Index".PadLeft(10),"Flight number".PadLeft(18), "Date and time of departure".PadLeft(31), "City of departure".PadLeft(20),
+                    "City of arrival".PadLeft(20), "Date and time of arrival".PadLeft(31), "Port of departure".PadLeft(20), "Port of arrival".PadLeft(20), "Airline".PadLeft(16), "Terminal".PadLeft(18), "Flight status".PadLeft(18) };
 
                 Console.Clear();
                 Console.WriteLine(string.Join("|", columns));
@@ -361,149 +361,19 @@ namespace ProjectAirportPanelV2
 
             DelegatesCache = new Dictionary<SelectedAirportProp, SearchPredicate>
             {
-                [SelectedAirportProp.FlightStatus] = (a, status) => a.Status.ToString() == status,
+                [SelectedAirportProp.FlightStatus] = (a, status) => a.Status.ToString() == status
+
                 // 2020-07-09T22:18:43Z
-                [SelectedAirportProp.DateArrival] = (a, dateStr) => a.DateArrival.Date == DateTime.Parse(dateStr, "Pattern").Date
+                //[SelectedAirportProp.DateArrival] = (a, dateStr) => a.DateArrival.Date == DateTime.Parse(dateStr, "Pattern").Date
             };
 
 
             Console.WriteLine("Enter desired status to find all flights");
 
             string userInput = Console.ReadLine(); // Arrived
-            SearchPredicate p = DelegatesCache[SelectedAirportProp.Status];
+            SearchPredicate p = DelegatesCache[SelectedAirportProp.FlightStatus];
             List<Airport> searchResult = Airports.FindAll(a => p(a, userInput));
-
-
-
-            /*
-            int da = 0;
-            List<int> indxSearch = new List<int>();
-            string[] columnSearch = new string[list.Count];
-            Console.Clear();
-            Console.WriteLine("Enter number of column to search\n1)Search date of arrival airplane\n2)Search date of departure airplane\n3)Search flight number\n4)Search city of arrivval" +
-                "\n5)Search city of departure\n6)Search airline\n7)Search terminal\n8)Search port of arrival\n9)Search port of departure\n10)Search flight status\n11)Nothing");
-            int searchChoice = Convert.ToInt32(Console.ReadLine());
-            switch (searchChoice)
-            {
-                case 1:
-                    da = 1;
-                    for (int d = 0; d < list.Count; d++)
-                    {
-                        columnSearch[d] = Convert.ToString(list[d].DateArrival);
-                    }
-                    Search();
-                    break;
-                case 2:
-                    da = 1;
-                    for (int d = 0; d < list.Count; d++)
-                    {
-                        columnSearch[d] = Convert.ToString(list[d].DateDeparture);
-                    }
-                    Search();
-                    break;
-                case 3:
-                    for (int d = 0; d < list.Count; d++)
-                    {
-                        columnSearch[d] = list[d].FlightNumber;
-                    }
-                    Search();
-                    break;
-                case 4:
-                    for (int d = 0; d < list.Count; d++)
-                    {
-                        columnSearch[d] = list[d].CityOfArrival;
-                    }
-                    Search();
-                    break;
-                case 5:
-                    for (int d = 0; d < list.Count; d++)
-                    {
-                        columnSearch[d] = list[d].CityOfDeparture;
-                    }
-                    Search();
-                    break;
-                case 6:
-                    for (int d = 0; d < list.Count; d++)
-                    {
-                        columnSearch[d] = list[d].Airline;
-                    }
-                    Search();
-                    break;
-                case 7:
-                    for (int d = 0; d < list.Count; d++)
-                    {
-                        columnSearch[d] = list[d].Terminal;
-                    }
-                    Search();
-                    break;
-                case 8:
-                    for (int d = 0; d < list.Count; d++)
-                    {
-                        columnSearch[d] = list[d].PortOfArrival;
-                    }
-                    Search();
-                    break;
-                case 9:
-                    for (int d = 0; d < list.Count; d++)
-                    {
-                        columnSearch[d] = list[d].PortOfDeparture;
-                    }
-                    Search();
-                    break;
-                case 10:
-                    for (int d = 0; d < list.Count; d++)
-                    {
-                        columnSearch[d] = Convert.ToString(list[d].Status);
-                    }
-                    Search();
-                    break;
-                    
-
-            }
-            void Search()
-            {            
-                if (da == 1)
-                {
-                    Console.WriteLine("Date format: dd.MM.yyyy HH:mm:ss");
-                }
-
-
-                Console.WriteLine("Enter a value to search");
-                string valueSearch = Console.ReadLine();
-                for (int e = 0; e < columnSearch.Length; e++)
-                {
-                    if (columnSearch[e].Contains(valueSearch))
-                    {
-                        indxSearch.Add(e);
-                    }
-                }
-                
-            }*/
-            void Result()
-            {
-                string[] columns = {"Index".PadLeft(10),"Flight number".PadLeft(18), "Date and time of departure".PadLeft(31), "Date and time of arrival".PadLeft(31), "City of departure".PadLeft(20),
-                "City of arrival".PadLeft(20),"Port of departure".PadLeft(20), "Port of arrival".PadLeft(20), "Airline".PadLeft(16), "Terminal".PadLeft(18), "Flight status".PadLeft(18) };
-                Console.Clear();
-                Console.WriteLine(string.Join("|", columns));
-                for (var f = 0; f < list.Count; f++)
-                {
-                    //if (indxSearch.Contains(f))
-                    //{
-                    //    Scoop(f);
-
-                    //}
-
-                }
-                for (int a = 0; a <= 3; a++)
-                {
-                    Console.WriteLine();
-                }
-                Console.Write("press any key ");
-                Console.ReadKey();
-
-            }
-            Result();
-
+            //List<Airport> searchResult1 = Airports.Contains(b => p(b, userInput));
         }
 
         private void Scoop(int i)
