@@ -33,10 +33,101 @@ namespace ProjectAirportPanelV2
 
         string delim = new string('-', 233);
 
-        delegate bool SearchPredicate(Airport a, string arg);
+        delegate Predicate<Airport> SearchPredicate();
 
-        static Dictionary<SelectedAirportProp, SearchPredicate> DelegatesCache;
-        static List<Airport> Airports;
+        static Dictionary<SelectedAirportProp, SearchPredicate> DelegatesCache = new Dictionary<SelectedAirportProp, SearchPredicate>
+        {
+            [SelectedAirportProp.FlightStatus] = CreateSearchByStatusPredicate,
+            [SelectedAirportProp.FlightNumber] = CreateSearchByFlightNumberPredicate,
+            [SelectedAirportProp.CityOfArrivval] = CreateSearchByCityOfArrivvalPredicate,
+            [SelectedAirportProp.CityOfDeparture] = CreateSearchByCityOfDeparturePredicate,
+            [SelectedAirportProp.PortofArrival] = CreateSearchByPortofArrivalPredicate,
+            [SelectedAirportProp.PortofDeparture] = CreateSearchByPortofDeparturePredicate,
+            [SelectedAirportProp.Terminal] = CreateSearchByTerminalPredicate,
+            [SelectedAirportProp.Airline] = CreateSearchByAirlinePredicate,
+            //[SelectedAirportProp.FlightNumber] = CreateSearchByFlightNumberPredicate,
+            //[SelectedAirportProp.FlightNumber] = CreateSearchByFlightNumberPredicate,
+            // 2020-07-09T22:18:43Z
+            //[SelectedAirportProp.DateArrival] = (a, dateStr) => a.DateArrival.Date == DateTime.Parse(dateStr, "Pattern").Date
+        };
+
+        private static Predicate<Airport> CreateSearchByStatusPredicate()
+        {
+            Console.WriteLine("Enter desired status to find all flights");
+            string userInput = Console.ReadLine();
+
+            return a => a.Status.ToString() == userInput;
+            //var closure = new IsMatchStatusPredicateClosure(userInput);
+            //return closure.IsMatch;
+        }
+
+        private static Predicate<Airport> CreateSearchByFlightNumberPredicate()
+        {
+            Console.WriteLine("Enter desired flight number to find all flights");
+            string userInput = Console.ReadLine();
+            return a => a.FlightNumber.ToString() == userInput;           
+        }
+
+        private static Predicate<Airport> CreateSearchByCityOfArrivvalPredicate()
+        {
+            Console.WriteLine("Enter desired city Of arrival to find all flights");
+            string userInput = Console.ReadLine();
+            return a => a.CityOfArrival.ToString() == userInput;
+        }
+
+        private static Predicate<Airport> CreateSearchByCityOfDeparturePredicate()
+        {
+            Console.WriteLine("Enter desired city Of departure to find all flights");
+            string userInput = Console.ReadLine();
+            return a => a.CityOfDeparture.ToString() == userInput;
+        }
+
+        private static Predicate<Airport> CreateSearchByPortofArrivalPredicate()
+        {
+            Console.WriteLine("Enter desired port Of arrival to find all flights");
+            string userInput = Console.ReadLine();
+            return a => a.PortOfArrival.ToString() == userInput;
+        }
+
+        private static Predicate<Airport> CreateSearchByPortofDeparturePredicate()
+        {
+            Console.WriteLine("Enter desired port Of departure to find all flights");
+            string userInput = Console.ReadLine();
+            return a => a.PortOfDeparture.ToString() == userInput;
+        }
+
+        private static Predicate<Airport> CreateSearchByTerminalPredicate()
+        {
+            Console.WriteLine("Enter desired Terminal to find all flights");
+            string userInput = Console.ReadLine();
+            return a => a.Terminal.ToString() == userInput;
+        }
+
+        private static Predicate<Airport> CreateSearchByAirlinePredicate()
+        {
+            Console.WriteLine("Enter desired airline to find all flights");
+            string userInput = Console.ReadLine();
+            return a => a.Airline.ToString() == userInput;
+        }
+        //private class IsMatchStatusPredicateClosure
+        //{
+        //    private string _searchStatus;
+        //    public IsMatchStatusPredicateClosure(string searchStatus)
+        //    {
+        //        _searchStatus = searchStatus;
+        //    }
+
+        //    public bool IsMatch(Airport a)
+        //    {
+        //        return a.Status.ToString() == _searchStatus;
+        //    }
+        //}
+
+
+        //delegate bool SearchPredicate(Airport a, string arg);
+
+        //static Dictionary<SelectedAirportProp, SearchPredicate> DelegatesCache;
+        //static List<Airport> Airports;
         //static void Main()
         //{
         //    DelegatesCache = new Dictionary<PropName, SearchPredicate>
@@ -359,21 +450,51 @@ namespace ProjectAirportPanelV2
         public void SearchRecord()
         {
 
-            DelegatesCache = new Dictionary<SelectedAirportProp, SearchPredicate>
-            {
-                [SelectedAirportProp.FlightStatus] = (a, status) => a.Status.ToString() == status
+            //DelegatesCache = new Dictionary<SelectedAirportProp, SearchPredicate>
+            //{
+            //    [SelectedAirportProp.FlightStatus] = (a, status) => a.Status.ToString() == status
 
-                // 2020-07-09T22:18:43Z
-                //[SelectedAirportProp.DateArrival] = (a, dateStr) => a.DateArrival.Date == DateTime.Parse(dateStr, "Pattern").Date
-            };
+            //    // 2020-07-09T22:18:43Z
+            //    //[SelectedAirportProp.DateArrival] = (a, dateStr) => a.DateArrival.Date == DateTime.Parse(dateStr, "Pattern").Date
+            //};
 
 
-            Console.WriteLine("Enter desired status to find all flights");
+            //Console.WriteLine("Enter desired status to find all flights");
 
-            string userInput = Console.ReadLine(); // Arrived
-            SearchPredicate p = DelegatesCache[SelectedAirportProp.FlightStatus];
-            List<Airport> searchResult = Airports.FindAll(a => p(a, userInput));
+            //string userInput = Console.ReadLine(); // Arrived
+            //SearchPredicate p = DelegatesCache[SelectedAirportProp.FlightStatus];
+            //List<Airport> searchResult = Airports.FindAll(a => p(a, userInput));
             //List<Airport> searchResult1 = Airports.Contains(b => p(b, userInput));
+
+            Console.Clear();
+            while (true)
+            {
+                Console.WriteLine("Enter number of column to search\n1)Search flight number\n2)Search date of arrival airplane\n3)Search date of departure airplane\n4)Search city of arrivval" +
+                    "\n5)Search city of departure\n6)Search airline\n7)Search terminal\n8)Search port of arrival\n9)Search port of departure\n10)Search flight status\n11)Nothing");
+
+                string rawInput = Console.ReadLine();
+                if (!Enum.TryParse<SelectedAirportProp>(rawInput, out var selectedProp))
+                {
+                    Console.WriteLine("Invalid value: " + rawInput + "\nTry again.\n");
+                    continue;
+                }
+
+                var searchDelegate = DelegatesCache[selectedProp];
+                var predicate = searchDelegate();
+                //var results = new List<Airport>();
+                //foreach (var item in list)
+                //{
+                //    if (predicate(item))
+                //    {
+                //        results.Add(item);
+                //    }
+                //}
+                var results = list.FindAll(predicate);
+                DumpAirportList(results);
+                // dump all results to console
+                break;
+                DumpAirportList(results);
+            }
         }
 
         private void Scoop(int i)
