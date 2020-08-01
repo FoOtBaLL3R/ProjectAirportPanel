@@ -45,8 +45,8 @@ namespace ProjectAirportPanelV2
             [SelectedAirportProp.PortofDeparture] = CreateSearchByPortofDeparturePredicate,
             [SelectedAirportProp.Terminal] = CreateSearchByTerminalPredicate,
             [SelectedAirportProp.Airline] = CreateSearchByAirlinePredicate,
-            //[SelectedAirportProp.FlightNumber] = CreateSearchByFlightNumberPredicate,
-            //[SelectedAirportProp.FlightNumber] = CreateSearchByFlightNumberPredicate,
+            [SelectedAirportProp.DateArrival] = CreateSearchByDateArrivalPredicate,
+            [SelectedAirportProp.DateDeparture] = CreateSearchByDateDeparturePredicate,
             // 2020-07-09T22:18:43Z
             //[SelectedAirportProp.DateArrival] = (a, dateStr) => a.DateArrival.Date == DateTime.Parse(dateStr, "Pattern").Date
         };
@@ -108,6 +108,20 @@ namespace ProjectAirportPanelV2
             Console.WriteLine("Enter desired airline to find all flights");
             string userInput = Console.ReadLine();
             return a => a.Airline.ToString() == userInput;
+        }
+
+        private static Predicate<Airport> CreateSearchByDateArrivalPredicate()
+        {
+            Console.WriteLine("Enter desired date arrival to find all flights\nExample:  dd.mm.year hh:mm:ss");
+            string userInput = Console.ReadLine();
+            return a => a.DateArrival.ToString() == userInput;
+        }
+
+        private static Predicate<Airport> CreateSearchByDateDeparturePredicate()
+        {
+            Console.WriteLine("Enter desired date departure to find all flights\nExample:  dd.mm.year hh:mm:ss");
+            string userInput = Console.ReadLine();
+            return a => a.DateDeparture.ToString() == userInput;
         }
         //private class IsMatchStatusPredicateClosure
         //{
@@ -490,6 +504,7 @@ namespace ProjectAirportPanelV2
                 //    }
                 //}
                 var results = list.FindAll(predicate);
+                //var results = list.Contains(predicate);
                 DumpAirportList(results);
                 // dump all results to console
                 break;
