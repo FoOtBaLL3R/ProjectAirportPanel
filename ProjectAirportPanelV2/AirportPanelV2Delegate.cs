@@ -56,7 +56,7 @@ namespace ProjectAirportPanelV2
             Console.WriteLine("Enter desired status to find all flights");
             string userInput = Console.ReadLine();
 
-            return a => a.Status.ToString() == userInput;
+            return a => a.Status.ToString().Contains(userInput);
             //var closure = new IsMatchStatusPredicateClosure(userInput);
             //return closure.IsMatch;
         }
@@ -65,63 +65,63 @@ namespace ProjectAirportPanelV2
         {
             Console.WriteLine("Enter desired flight number to find all flights");
             string userInput = Console.ReadLine();
-            return a => a.FlightNumber.ToString() == userInput;           
+            return a => a.FlightNumber.ToString().Contains(userInput);
         }
 
         private static Predicate<Airport> CreateSearchByCityOfArrivvalPredicate()
         {
             Console.WriteLine("Enter desired city Of arrival to find all flights");
             string userInput = Console.ReadLine();
-            return a => a.CityOfArrival.ToString() == userInput;
+            return a => a.CityOfArrival.ToString().Contains(userInput);
         }
 
         private static Predicate<Airport> CreateSearchByCityOfDeparturePredicate()
         {
             Console.WriteLine("Enter desired city Of departure to find all flights");
             string userInput = Console.ReadLine();
-            return a => a.CityOfDeparture.ToString() == userInput;
+            return a => a.CityOfDeparture.ToString().Contains(userInput);
         }
 
         private static Predicate<Airport> CreateSearchByPortofArrivalPredicate()
         {
             Console.WriteLine("Enter desired port Of arrival to find all flights");
             string userInput = Console.ReadLine();
-            return a => a.PortOfArrival.ToString() == userInput;
+            return a => a.PortOfArrival.ToString().Contains(userInput);
         }
 
         private static Predicate<Airport> CreateSearchByPortofDeparturePredicate()
         {
             Console.WriteLine("Enter desired port Of departure to find all flights");
             string userInput = Console.ReadLine();
-            return a => a.PortOfDeparture.ToString() == userInput;
+            return a => a.PortOfDeparture.ToString().Contains(userInput);
         }
 
         private static Predicate<Airport> CreateSearchByTerminalPredicate()
         {
             Console.WriteLine("Enter desired Terminal to find all flights");
             string userInput = Console.ReadLine();
-            return a => a.Terminal.ToString() == userInput;
+            return a => a.Terminal.ToString().Contains(userInput);
         }
 
         private static Predicate<Airport> CreateSearchByAirlinePredicate()
         {
             Console.WriteLine("Enter desired airline to find all flights");
             string userInput = Console.ReadLine();
-            return a => a.Airline.ToString() == userInput;
+            return a => a.Airline.ToString().Contains(userInput);
         }
 
         private static Predicate<Airport> CreateSearchByDateArrivalPredicate()
         {
             Console.WriteLine("Enter desired date arrival to find all flights\nExample:  dd.mm.year hh:mm:ss");
             string userInput = Console.ReadLine();
-            return a => a.DateArrival.ToString() == userInput;
+            return a => a.DateArrival.ToString().Contains(userInput);
         }
 
         private static Predicate<Airport> CreateSearchByDateDeparturePredicate()
         {
             Console.WriteLine("Enter desired date departure to find all flights\nExample:  dd.mm.year hh:mm:ss");
             string userInput = Console.ReadLine();
-            return a => a.DateDeparture.ToString() == userInput;
+            return a => a.DateDeparture.ToString().Contains(userInput);
         }
         //private class IsMatchStatusPredicateClosure
         //{
